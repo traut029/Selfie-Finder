@@ -3,7 +3,7 @@
 $("#reset-button").click(function () {
     // console.log("RESET")
     resetFilters();
-    //location.reload();
+    location.reload();
 });
 
 $("#submit-button").click(function () {
