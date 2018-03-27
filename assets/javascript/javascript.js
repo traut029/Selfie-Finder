@@ -23,7 +23,7 @@ var imageData = {
 var radius = $("#radius-input").val().trim();
 var lon = $("#lon-input").val().trim();
 var lat = $("#lat-input").val().trim();
-
+var searchText=$("#search-input").val().trim();
 
 
 
@@ -46,13 +46,13 @@ function flickr() {
         radius = $("#radius-input").val().trim();
         lon = $("#lon-input").val().trim();
         lat = $("#lat-input").val().trim();
-
+        searchText=$("#search-input").val().trim();
         console.log(radius)
         console.log(lon)
         console.log(lat)
 
 
-        var queryURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=2b85c680be8fe0b66443ea94abe08939&text=selfie&lat=" + lat + "&lon=" + lon + "&radius=" + radius + "&extras=geo%2Curl_m&per_page=10&format=json&nojsoncallback=1";
+        var queryURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=2b85c680be8fe0b66443ea94abe08939&text="+searchText+"&lat=" + lat + "&lon=" + lon + "&radius=" + radius + "&extras=geo%2Curl_m&per_page=10&format=json&nojsoncallback=1";
 
         //https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=91884370094f960f31a09dc4a8fe006e&text=man&bbox=-94%2C44%2C-93%2C45&extras=geo%2Curl_m&per_page=10&format=json&nojsoncallback=1&api_sig=ba05266d99df5ad521ecd7f7a7156dff
         var queryURLbase = "http://api.flickr.com/services/rest/?"
