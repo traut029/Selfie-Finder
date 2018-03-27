@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/maps.css" />
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="banner" id="banner-div">
+            <div class="jumbotron jumbotron-fluid text-center">
+                <h1 class="display-4">
+                    <b>Local Image Filter</b>
+                </h1>
+            </div>
+        </div>
+
+        <div class="row" id="content-div">
+            <div class="col-sm-8 col-md-8 col-lg-8 " id="map">
+            </div>
+
+            <div class="col-sm-4 col-md-3 col-lg-3 " id="filter-div">
+
+
+                <!-- <div class="form-group">
+                    <label for="add-image-input">
+                        <b>Search</b>
+                    </label>
+                    <input type="text" class="form-control" id="add-image-input">
+                    <button type="button" id="submitButton" class="btn btn-sm">Submit</button>
+                </div>
+                <div class="form-group">
+                    <label for="lat-input">lattitude:</label>
+                    <input class="form-control" id="lat-input" type="text" value="44.986656">
+                </div>
+                <div class="form-group">
+                    <label for="lon-input">longitude:</label>
+                    <input class="form-control" id="lon-input" type="text" value="-93.258133">
+                </div>
+                <div class="form-group">
+                    <label for="radius-input">radius:</label>
+                    <input class="form-control" id="radius-input" type="text" value="10">
+                </div>
+                <fieldset>
+                    <div class="item">
+                        <input type="checkbox" id="glasses">
+                        <label for="a">Glasses</label>
+                    </div>
+                    <div class="item">
+                        <input type="checkbox" id="men">
+                        <label for="men">Men</label>
+                    </div>
+                    <div class="item">
+                        <input type="checkbox" id="women">
+                        <label for="women">Women</label>
+                    </div>
+                </fieldset> -->
+
+
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+
+                    <div class="row" id="filter-toolbar">
+
+                        <div class="btn-toolbar " role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                Filters
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+
+                                <a class="dropdown-item" href="#" onclick="filterSelection('location-radius') 
+                                ">Location</a>
+                                <a class="dropdown-item" href="#" onclick="filterSelection('search') 
+                                ">Search</a>
+                                <a class="dropdown-item" href="#" onclick="filterSelection('gender')
+                                ">Gender</a>
+                                <a class="dropdown-item" href="#" onclick="filterSelection('glasses')
+                                ">Glasses</a>
+                                <a class="dropdown-item" href="#" onclick="filterSelection('lips')
+                                ">Lips</a>
+
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-sm btn-danger" id="reset-button">Reset</button>
+                        <button type="button" class="btn btn-sm btn-success" id="submit-button">Submit</button>
+
+
+                    </div>
+                </div>
+
+                <div class="row" id="filter-content">
+
+                    <div class="filterDiv" id="location-radius">
+                        <p>Location Filter</p>
+                        <form>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput">Lat</label>
+                                <input type="text" class="form-control" id="lat-input" value="44.986656">
+                            </div>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput2">Lng</label>
+                                <input type="text" class="form-control" id="lon-input" value="-93.258133">
+                            </div>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput2">Radius (km)</label>
+                                <input type="text" class="form-control" id="radius-input" value="10">
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="filterDiv" id="search">
+                        <p>KeyWord Search Filter</p>
+                        <form>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput">Search</label>
+                                <input type="text" class="form-control" id="search-input" placeholder="search">
+                            </div>
+                        </form>
+            
+                    </div>
+
+                    <div class="filterDiv" id="gender">
+                        <p>Gender Filter</p>
+                        <div class="item">
+                                <input type="checkbox" id="men">
+                                 <label for="men">Men Only</label>
+                             </div>
+                             <div class="item">
+                                 <input type="checkbox" id="women">
+                                 <label for="women">Women Only</label>
+                             </div>
+                    </div>
+
+                    <div class="filterDiv" id="glasses">
+                        <p>Glasses Filter</p>
+                        <div class="item">
+                                <input type="checkbox" id="glasses1">
+                                <label for="glasses1">Glasses</label>
+                            </div>
+                    </div>
+
+                    <div class="filterDiv lips" id="lips">
+                        <p>Lips Filter</p>
+                        <div class="form-check">
+                            <input class="form-check-input" name="lips" type="radio" id="radio104" value="true">
+                            <label class="form-check-label" for="radio104">Lips Together</label>
+                        </div>
+
+                        <div class="form-check">
+                            <input class="form-check-input" name="lips" type="radio" id="radio105" value="false">
+                            <label class="form-check-label" for="radio105">Lips Apart</label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="row" id="image-div">
+        </div> -->
+
+    </div>
+
+<<<<<<< HEAD
+    <!--script type="text/javascript" src="assets/javascript/maps.js"></script>-->
+    <!-- <script type="text/javascript" src="assets/javascript/googleMaps.js"></script> -->
+    <!--script type="text/javascript" src="assets/javascript/images.js"></script>-->
+    <script type="text/javascript" src="assets/javascript/javascript.js"></script>
+=======
+
+    <script type="text/javascript" src="assets/javascript/javascript.js"></script>
+    <script type="text/javascript" src="assets/javascript/events.js"></script>
+>>>>>>> 572a5fdccbb6e2ffa3d493c91af976b955c43c48
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUfiYZ-ff230QqQ_tg_ErC8K9pRazQNxY&callback=initMap" async
+        defer></script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+
+        <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js " integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q "
+        crossorigin="anonymous "></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js " integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl "
+        crossorigin="anonymous "></script>
+
+</body>
+
+</html>

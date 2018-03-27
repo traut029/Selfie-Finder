@@ -1,0 +1,77 @@
+.container {
+    /* background-color: rgb(229, 232, 240); */
+    background-color: black;
+    width: 960px;
+    border-radius: 10px;
+    padding: 0px;
+    font-family: monospace;
+    color: green;
+}
+
+.jumbotron {
+    /* background-color: rgb(87, 87, 114) !important; */
+    background-color: black !important;
+    /* color: orange; */
+    color: green;
+    font-weight: bold !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+#content-div{
+    padding-bottom: 30px;
+}
+
+#map {
+    height: 550px;
+    margin-left: 15px;
+    margin-bottom: 15px;    
+    margin:0 auto;
+}
+
+#filter-div {
+    margin-right: 15px;
+    /* background-color: rgb(229, 232, 240); */
+    background-color: black;
+    padding-right: 30px;
+    min-width: 240px;
+}
+
+#filter-content {
+    /* background-color: rgb(241, 240, 172); */
+    background-color: white;
+    border: green 3px solid;
+    border-radius: 5px;
+    min-height:280px;
+    padding-left: 5px;
+    padding-right: 10px;
+    padding-top: 10px;
+    color: rgb(15, 76, 100);
+    font-weight: bold;
+}
+
+#filter-toolbar {
+    margin-bottom: 5px;
+}
+
+.filterDiv{
+    width:100%;
+}
+
+img {
+    height: 200px;
+    margin-right: 10px;
+}
+
+.btn-toolbar{
+    text-align: center;
+}​
+
+#infoWindow img {
+    display: block;
+    max-width: 230px;
+    max-height: 230px;
+    width: auto;
+    height: auto;
+}
+
