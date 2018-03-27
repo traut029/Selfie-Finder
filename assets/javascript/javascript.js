@@ -20,56 +20,53 @@ var imageData = {
     latitude: "",
     longitude: "",
 }
+//calls relevant variables globally
 var radius = $("#radius-input").val().trim();
 var lon = $("#lon-input").val().trim();
 var lat = $("#lat-input").val().trim();
-var searchText=$("#search-input").val().trim();
+var searchText = $("#search-input").val().trim();
 
 
 
-//FLICKER THIS WORKS
+//Calls Flickr images and loops face function, which filters images through Kairos API
 function flickr() {
-    //empty image folder to start anew
 
-
+    //Call the flickr API
     var flickerApiKey = "2b85c680be8fe0b66443ea94abe08939";
     var flickerSecret = "4b36c92a87544403";
 
+    //On click of the submit button
     $("#submit-button").click(function () {
 
+    //reset arrays for map and sets them to global
         locations = [];
         url = [];
         window.locations = locations;
         window.url = url;
-        console.log("Map: initmap locations checkSCOPE " + locations)
+        
+        //Empty database of old images
         database.ref("/imageFolder").set("")
+
+        //Calls variables locally
         radius = $("#radius-input").val().trim();
         lon = $("#lon-input").val().trim();
         lat = $("#lat-input").val().trim();
-        searchText=$("#search-input").val().trim();
-        console.log(radius)
-        console.log(lon)
-        console.log(lat)
+        searchText = $("#search-input").val().trim();
+        
+        //Query URL for flickr
+        var queryURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=2b85c680be8fe0b66443ea94abe08939&text=" + searchText + "&lat=" + lat + "&lon=" + lon + "&radius=" + radius + "&extras=geo%2Curl_m&per_page=10&format=json&nojsoncallback=1";
 
-
-        var queryURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=2b85c680be8fe0b66443ea94abe08939&text="+searchText+"&lat=" + lat + "&lon=" + lon + "&radius=" + radius + "&extras=geo%2Curl_m&per_page=10&format=json&nojsoncallback=1";
-
-        //https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=91884370094f960f31a09dc4a8fe006e&text=man&bbox=-94%2C44%2C-93%2C45&extras=geo%2Curl_m&per_page=10&format=json&nojsoncallback=1&api_sig=ba05266d99df5ad521ecd7f7a7156dff
-        var queryURLbase = "http://api.flickr.com/services/rest/?"
-
-
-
-
-
+        //Call flickr API
         $.ajax({
             url: queryURL,
             method: "GET"
         })
             .then(function (response) {
+                //calls response in console
                 console.log(response)
-                console.log(response.photos.photo["0"].url_m)
+                //Finds number of images called
                 var arrayLength = response.photos.photo.length
-
+                //Loop to run all images through kairos API
                 for (i = 0; i < arrayLength; i++) {
 
                     var imageUrl = response.photos.photo[i].url_m;
@@ -82,19 +79,13 @@ function flickr() {
                         longitude: imageLongitude,
 
                     };
-
+                    //calls face function 
                     face();
-                    // Uploads train data to the database
-                    //database.ref().push(imageData);
-                    // var imageRef = database.ref("/images");
-
                 }
-
             })
-
     })
-
 }
+//runs kairos API to filter face features
 function face() {
 
     //var faceApiKey = "6727c81753d01555ba2777fa923e3b2c";
@@ -104,13 +95,13 @@ function face() {
     var faceApiKey = "6da0f85d408056e6b38af6725ba34647"
     var id = "51ddb6f1"
 
+    //collects image data from flickr function and puts it into a new object to prevent scoping issues
     var imageData2 = {
         url: imageData.url,
         imageLatitude: imageData.latitude,
         imageLongitude: imageData.longitude
     }
-
-    //pasted in below
+    //Calls kairos API
     var headers = {
         "Content-type": "application/json",
         "app_id": id,
@@ -118,6 +109,7 @@ function face() {
     };
     var payload = { "image": imageData2.url };
     var url = "https://api.kairos.com/detect";
+
     // make request 
     $.ajax(url, {
         headers: headers,
@@ -125,7 +117,12 @@ function face() {
         data: JSON.stringify(payload),
         dataType: "json"
     }).done(function (response) {
+
+        //console logs the response
         console.log(response);
+
+        //if and else statements to check which filters are checked by user (glasses, men only, women only), and depending on the combination checks for specific features in the kairos API response. It then sends the images that pass the filter into the database.
+
         if ($("#men").is(":checked") && $("#women").is(":checked")) {
             return;
         }
@@ -175,12 +172,12 @@ function face() {
 
     });
 }
-//Main Process
+//Call function
 flickr()
 
 
 
-////// The below section pulls data from DB and adds lat and lng to the locations array and cals initMap to have maps read the locations and add the pins  /////
+////// The below section pulls data from DB and adds lat and lng to the locations array and calls initMap to have maps read the locations and add the pins  /////
 
 ////////////////////////////////////////////////
 /////////// Google Maps Javascript /////////////
@@ -306,9 +303,9 @@ function initMap() {
 
     });
     // auto centers and pans to new marker location with a new set zoom level
-   
-   map.fitBounds(bounds); 
-   map.panToBounds(bounds);  
-   map.setZoom(11);    
-   console.log(bounds)
+
+    map.fitBounds(bounds);
+    map.panToBounds(bounds);
+    map.setZoom(11);
+    console.log(bounds)
 }
