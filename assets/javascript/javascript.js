@@ -191,6 +191,11 @@ function face() {
     //backup key and id, make sure one is always commented out
     var faceApiKey = "6da0f85d408056e6b38af6725ba34647"
     var id = "51ddb6f1"
+    var imageData2 = {
+        url: imageData.url,
+        imageLatitude: imageData.latitude,
+        imageLongitude: imageData.longitude
+    }
     //pasted in below
     var headers = {
         "Content-type": "application/json",
