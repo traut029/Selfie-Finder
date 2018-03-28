@@ -46,9 +46,9 @@ function resetFilters() {
 
 function submit() {
 
-    lat = $("#lat").val().trim();
-    lng = $('#lng').val().trim();
-    radius = $('#radius').val().trim();
+    lat = $("#lat").val();
+    lng = $('#lng').val();
+    radius = $('#radius').val();
 
 
     search = $('#search-input').val();

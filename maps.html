@@ -132,21 +132,27 @@
 
                     <div class="filterDiv" id="gender">
                         <p>Gender Filter</p>
-                        <div class="item">
-                                <input type="checkbox" id="men">
-                                 <label for="men">Men Only</label>
-                             </div>
-                             <div class="item">
-                                 <input type="checkbox" id="women">
-                                 <label for="women">Women Only</label>
-                             </div>
+                        <div class="form-check">
+                                <input class="form-check-input" name="gender" type="radio" id="radio100" value="true">
+                                <label class="form-check-label" for="radio100">Male</label>
+                            </div>
+    
+                            <div class="form-check">
+                                <input class="form-check-input" name="gender" type="radio" id="radio101" value="false">
+                                <label class="form-check-label" for="radio101">Female</label>
+                            </div>
                     </div>
 
                     <div class="filterDiv" id="glasses">
                         <p>Glasses Filter</p>
-                        <div class="item">
-                                <input type="checkbox" id="glasses1">
-                                <label for="glasses1">Glasses</label>
+                        <div class="form-check">
+                                <input class="form-check-input" name="glasses" type="radio" id="radio102" value="true">
+                                <label class="form-check-label" for="radio102">Wearing Glasses</label>
+                            </div>
+    
+                            <div class="form-check">
+                                <input class="form-check-input" name="glasses" type="radio" id="radio103" value="false">
+                                <label class="form-check-label" for="radio103">No Glasses</label>
                             </div>
                     </div>
 
@@ -173,16 +179,12 @@
 
     </div>
 
-<<<<<<< HEAD
     <!--script type="text/javascript" src="assets/javascript/maps.js"></script>-->
     <!-- <script type="text/javascript" src="assets/javascript/googleMaps.js"></script> -->
     <!--script type="text/javascript" src="assets/javascript/images.js"></script>-->
     <script type="text/javascript" src="assets/javascript/javascript.js"></script>
-=======
 
-    <script type="text/javascript" src="assets/javascript/javascript.js"></script>
-    <script type="text/javascript" src="assets/javascript/events.js"></script>
->>>>>>> 572a5fdccbb6e2ffa3d493c91af976b955c43c48
+     <!--<script type="text/javascript" src="assets/javascript/events.js"></script> -->
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDUfiYZ-ff230QqQ_tg_ErC8K9pRazQNxY&callback=initMap" async
         defer></script>
