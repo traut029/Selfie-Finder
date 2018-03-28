@@ -273,32 +273,59 @@ function face() {
 //Main Process
 
 //locations = [45, -93.3];
-////// The below section pulls data from DB and adds lat and lng to the locations array and cals initMap to have maps read the locations and add the pins  /////
+////// The below section pulls data from DB and adds lat and lng to the locations array and calls initMap to have maps read the locations and add the pins  /////
+
 ////////////////////////////////////////////////
 /////////// Google Maps Javascript /////////////
 ////////////////////////////////////////////////
+
 ////// The below section pulls data from DB and adds lat and lng to the locations array and cals initMap to have maps read the locations and add the pins  /////
+
+
 // Locations and url array are global
+var locations = [45, -93.3]
+
+var url = []
+
 // Pulling from DB and adding locations and url to pass to maps
 database.ref("/imageFolder").on("child_added", function (child_changed, prevChildKey) {
+
+
+
     console.log("Map: pulling location data from DB inside initMap to prep for initMap insertion");
-    // The below section takes the inital lat and lng variables and converts them from strings to numbers.  Google Maps only wants numbers
-    var latitudeVar = Number(child_changed.val().imageLatitude);
-    console.log(latitudeVar)
-    var longitudeVar = Number(child_changed.val().imageLongitude);
-    console.log(longitudeVar)
+
+    var latitudeVar = child_changed.val().latitude;
+    console.log(latitudeVar);
+    var longitudeVar = child_changed.val().longitude;
+    console.log(longitudeVar);
     var pic = child_changed.val().url;
+
+    // The below section takes the inital lat and lng variables and converts them from strings to numbers.  Google Maps only wants numbers
+    var latitudeVar2 = Number(latitudeVar);
+    console.log(latitudeVar2);
+    var longitudeVar2 = Number(longitudeVar);
+    console.log(longitudeVar2);
+
+
+
     url.push(pic)
     // Push to locations array
     locations.push(
-        [latitudeVar, longitudeVar]
+        [latitudeVar2, longitudeVar2]
+
     )
     // Make Google maps look at the array again and passes locations and url
     // Firebase data comes in to the locations array slower than Google Maps loads so initMap has to be called here
     initMap(locations, url);
+
 });
+
+
+
 // Google Maps initMap starts
+
 function initMap() {
+
     console.log("Map: google maps starts with initMap!")
     console.log("Map: initmap locations check " + locations)
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -306,6 +333,7 @@ function initMap() {
         zoom: 7,
         // Inital maps location, can change
         center: { lat: 44.0000, lng: -93.000 }
+
     });
     // Defines bounds for markers
     var bounds = new google.maps.LatLngBounds()
@@ -318,9 +346,12 @@ function initMap() {
         size: new google.maps.Size(70, 60),
         scaledSize: new google.maps.Size(70, 60),
         origin: new google.maps.Point(0, 0),
+
     }
+
     // Labels for markers, not visible on most cutom markers
     var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
     // Loop that starts marker adding on Maps
     for (var i = 0; i < locations.length; i++) {
         console.log("Map: set marker loop runs...")
@@ -334,9 +365,11 @@ function initMap() {
             animation: google.maps.Animation.DROP,
             url: url[i]
         });
+
         // Moves maps boundaries to new marker locations
         var loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
         bounds.extend(loc);
+
         // market listener listens for clicks on the markers
         marker.addListener('click', function () {
             // contentString contains the HTML for the popup on marker click
@@ -344,23 +377,29 @@ function initMap() {
             var infowindow = new google.maps.InfoWindow({
                 content: contentString
             });
+
             console.log("Map: marker click event!");
             // alert("hello!"); // works
             // window.location.href = this.url // WORKS for just a url on each marker
             // window.open(this.url); //WORKS for opening URL in new tab
             infowindow.open(map, this);
+
+
         });
     }
     // This tells you your lat and long when you click on the map, currently it just dumps it to console.
     google.maps.event.addListener(map, "click", function (event) {
         var clickLat = event.latLng.lat();
         var clickLon = event.latLng.lng();
+
         // Show lat and lng in console and alert window, variables of clickLat and clickLon are ready for use in HTML
         console.log("Maps Click lat " + clickLat)
         console.log("Maps Click lng " + clickLon)
         // alert("Your Lat: " + clickLat + "     Your Lng: " + clickLon)
+
     });
     // auto centers and pans to new marker location with a new set zoom level
+
     map.fitBounds(bounds);
     map.panToBounds(bounds);
     map.setZoom(11);
