@@ -196,13 +196,14 @@ function face() {
         imageLatitude: imageData.latitude,
         imageLongitude: imageData.longitude
     }
+    console.log("IMAGE DATA 2: "+imageData2.url)
     //pasted in below
     var headers = {
         "Content-type": "application/json",
         "app_id": id,
         "app_key": faceApiKey
     };
-    var payload = { "image": imageData.url };
+    var payload = { "image": imageData2.url };
     var url = "https://api.kairos.com/detect";
     // make request 
     $.ajax(url, {
@@ -224,7 +225,7 @@ function face() {
             var maleness = response.images["0"].faces["0"].attributes.gender.maleConfidence;
             if (glasses != "None" && maleness > 0.5) {
                 console.log("MAN WITH GLASSES")
-                database.ref("/imageFolder").push(imageData)
+                database.ref("/imageFolder").push(imageData2)
             }
         }
         //else if wearing glases and a woman and not a man
@@ -235,7 +236,7 @@ function face() {
             var femaleness = response.images["0"].faces["0"].attributes.gender.femaleConfidence;
             if (glasses != "None" && femaleness > 0.5) {
                 console.log("WOMAN WITH GLASSES")
-                database.ref("/imageFolder").push(imageData)
+                database.ref("/imageFolder").push(imageData2)
             }
         }
         //else if wearing glasses and not a man and not a woman
@@ -245,7 +246,7 @@ function face() {
             var glasses = response.images["0"].faces["0"].attributes.glasses;
             if (glasses != "None") {
                 console.log("GLASSES")
-                database.ref("/imageFolder").push(imageData)
+                database.ref("/imageFolder").push(imageData2)
             }
         }
         //else if a man and not a woman and no glasses
@@ -254,7 +255,7 @@ function face() {
             console.log("MAN AND NO GLASSES!!!!!!!!!!!!!!!!!");
             var maleness = response.images["0"].faces["0"].attributes.gender.maleConfidence;
             if (maleness > 0.5) {
-                database.ref("/imageFolder").push(imageData)
+                database.ref("/imageFolder").push(imageData2)
                 console.log("MAN")
             }
         }
@@ -264,14 +265,14 @@ function face() {
             console.log("WOMAN WITH NO GLASSES!!!!!!!!!!!!!!!!!");
             var femaleness = response.images["0"].faces["0"].attributes.gender.femaleConfidence;
             if (femaleness > 0.5) {
-                database.ref("/imageFolder").push(imageData)
+                database.ref("/imageFolder").push(imageData2)
                 console.log("WOMAN")
             }
         }
         //else if not a woman and not a man and no glasses
         // else if (!$("#women").is(":checked") && !$("#men").is(":checked") && !$("#glasses1").is(":checked")) {
         if (!wearingGlasses) {
-            database.ref("/imageFolder").push(imageData)
+            database.ref("/imageFolder").push(imageData2)
         }
     });
 }
@@ -299,9 +300,9 @@ database.ref("/imageFolder").on("child_added", function (child_changed, prevChil
 
     console.log("Map: pulling location data from DB inside initMap to prep for initMap insertion");
 
-    var latitudeVar = child_changed.val().latitude;
+    var latitudeVar = child_changed.val().imageLatitude;
     console.log(latitudeVar);
-    var longitudeVar = child_changed.val().longitude;
+    var longitudeVar = child_changed.val().imageLongitude;
     console.log(longitudeVar);
     var pic = child_changed.val().url;
 
