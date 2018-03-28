@@ -287,6 +287,7 @@ database.ref("/imageFolder").on("child_added", function (child_changed, prevChil
     console.log(latitudeVar)
     var longitudeVar = Number(child_changed.val().imageLongitude);
     console.log(longitudeVar)
+    var pic = child_changed.val().url;
     url.push(pic)
     // Push to locations array
     locations.push(
