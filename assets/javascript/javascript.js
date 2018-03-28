@@ -49,9 +49,11 @@ function flickr() {
         lon = $("#lon-input").val().trim();
         lat = $("#lat-input").val().trim();
         searchText = $("#search-input").val().trim();
+        searchText2=searchText.split(' ').join('+');
+        console.log("SEARCHTEXT2: "+searchText2)
         
         //Query URL for flickr
-        var queryURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=2b85c680be8fe0b66443ea94abe08939&text=" + searchText + "&lat=" + lat + "&lon=" + lon + "&radius=" + radius + "&extras=geo%2Curl_m&per_page=10&format=json&nojsoncallback=1";
+        var queryURL = "https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=2b85c680be8fe0b66443ea94abe08939&text=" + searchText2 + "&lat=" + lat + "&lon=" + lon + "&radius=" + radius + "&extras=geo%2Curl_m&per_page=10&format=json&nojsoncallback=1";
 
         //Call flickr API
         $.ajax({
